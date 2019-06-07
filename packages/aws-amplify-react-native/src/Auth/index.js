@@ -25,6 +25,7 @@ import ForgotPassword from './ForgotPassword';
 import RequireNewPassword from './RequireNewPassword';
 import VerifyContact from './VerifyContact';
 import Greetings from './Greetings';
+import withOAuth from './withOAuth';
 
 const logger = new Logger('auth components');
 
@@ -39,7 +40,8 @@ export {
     Loading,
     RequireNewPassword,
     VerifyContact,
-    Greetings
+    Greetings,
+    withOAuth
 };
 
 export function withAuthenticator(
@@ -99,6 +101,7 @@ export function withAuthenticator(
                             authData={authData}
                             onStateChange={this.handleAuthStateChange}
                             theme={theme}
+                            usernameAttributes={this.authConfig.usernameAttributes}
                         />
                         <Comp
                             {...this.props}
@@ -116,6 +119,7 @@ export function withAuthenticator(
                 signUpConfig={this.authConfig.signUpConfig}
                 onStateChange={this.handleAuthStateChange}
                 children={this.authConfig.authenticatorComponents}
+                usernameAttributes={this.authConfig.usernameAttributes}
                 theme={theme}
             />
         }
