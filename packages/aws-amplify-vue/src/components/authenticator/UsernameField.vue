@@ -21,6 +21,7 @@
                 :placeholder="$Amplify.I18n.get(`Enter your ${getUsernameLabel()}`)" 
                 autofocus 
                 v-on:keyup="usernameChanged" 
+                v-on:input="username = $event.target.value"
                 v-bind:data-test="auth.genericAttrs.usernameInput"
             />
         </div>
@@ -32,6 +33,7 @@
                 :placeholder="$Amplify.I18n.get('Enter your email')" 
                 autofocus 
                 v-on:keyup="emailChanged" 
+                v-on:input="email = $event.target.value"
                 v-bind:data-test="auth.genericAttrs.emailInput"
             />
         </div>
@@ -67,6 +69,14 @@ export default {
             auth,
         }
     },
+    mounted: function() {
+        if (window && window.location && window.location.search) {
+            const searchParams = new URLSearchParams(window.location.search);
+            const usernameParam = searchParams ? searchParams.get('username') : this.username;
+            this.username = usernameParam;
+            this.$emit('username-field-changed', {usernameField: 'username', username: usernameParam});
+        }
+    },  
     computed: {
         shouldRenderEmailField() {
             return this.usernameAttributes === 'email';
